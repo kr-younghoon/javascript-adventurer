@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Editor } from '@monaco-editor/react';
+import { auth } from '../firebase'; // Firebase 초기화 모듈에서 가져옴
+import { useAuthState } from 'react-firebase-hooks/auth';
 import {
     getFirestore,
     collection,
@@ -10,12 +12,11 @@ import {
     arrayUnion,
     serverTimestamp,
     DocumentData,
+    QuerySnapshot,
+    DocumentSnapshot,
 } from 'firebase/firestore';
-import { getAuth } from 'firebase/auth';
-import { useAuthState } from 'react-firebase-hooks/auth';
 
-// Firebase 초기화 및 Firestore 인스턴스 가져오기
-const auth = getAuth();
+// Firestore 인스턴스 생성
 const firestore = getFirestore();
 
 const Room: React.FC = () => {
@@ -30,15 +31,18 @@ const Room: React.FC = () => {
     );
 
     useEffect(() => {
+        // Firestore 컬렉션의 스냅샷 리스너 설정
         const roomsCollection = collection(
             firestore,
             'rooms'
         );
         const unsubscribe = onSnapshot(
             roomsCollection,
-            (snapshot) => {
+            (snapshot: QuerySnapshot<DocumentData>) => {
                 const roomsData = snapshot.docs.map(
-                    (doc) => ({ id: doc.id, ...doc.data() })
+                    (
+                        doc: DocumentSnapshot<DocumentData>
+                    ) => ({ id: doc.id, ...doc.data() })
                 );
                 setRooms(roomsData);
                 setLoading(false);
@@ -68,10 +72,16 @@ const Room: React.FC = () => {
         });
         setRoomId(id);
 
-        const unsubscribe = onSnapshot(roomRef, (doc) => {
-            setCurrentRoom({ id: doc.id, ...doc.data() });
-            setCode(doc.data()?.code || '');
-        });
+        const unsubscribe = onSnapshot(
+            roomRef,
+            (doc: DocumentSnapshot<DocumentData>) => {
+                setCurrentRoom({
+                    id: doc.id,
+                    ...doc.data(),
+                });
+                setCode(doc.data()?.code || '');
+            }
+        );
 
         return () => unsubscribe();
     };
