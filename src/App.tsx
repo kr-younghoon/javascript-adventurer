@@ -46,17 +46,20 @@ const App: React.FC = () => {
         <ProgressProvider>
             <div className="App">
                 <h1>타입모험가🚨</h1>
+
                 {user ? (
                     <div>
-                        <p>Welcome, {user.displayName}!</p>
+                        <p>
+                            안녕하세요, {user.displayName}!
+                        </p>
                         <button onClick={handleSignOut}>
-                            Sign Out
+                            로그아웃
                         </button>
                         <Room />
                     </div>
                 ) : (
                     <button onClick={signIn}>
-                        Sign In with Google
+                        멀티 플레이를 위한 구글 소셜로그인
                     </button>
                 )}
                 {quests.map((quest) => (
