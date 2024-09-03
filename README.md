@@ -48,4 +48,4 @@ export default tseslint.config({
   },
 })
 ```
-# type-adventurer
+# javascript-adventurer
