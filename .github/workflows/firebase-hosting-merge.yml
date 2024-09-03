@@ -3,18 +3,28 @@
 
 name: Deploy to Firebase Hosting on merge
 on:
-  push:
-    branches:
-      - main
+    push:
+        branches:
+            - main
 jobs:
-  build_and_deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - run: npm ci && npm run build
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-        with:
-          repoToken: ${{ secrets.GITHUB_TOKEN }}
-          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TYPE_ADVENTURER }}
-          channelId: live
-          projectId: type-adventurer
+    build_and_deploy:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+
+            # Set up Node.js environment
+            - name: Set up Node.js
+              uses: actions/setup-node@v2
+              with:
+                  node-version: '16' # 사용 중인 Node.js 버전으로 변경
+
+            # Install dependencies and build
+            - run: npm ci && npm run build
+
+            # Deploy to Firebase Hosting
+            - uses: FirebaseExtended/action-hosting-deploy@v0
+              with:
+                  repoToken: ${{ secrets.GITHUB_TOKEN }}
+                  firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_TYPE_ADVENTURER }}
+                  channelId: live
+                  projectId: type-adventurer
