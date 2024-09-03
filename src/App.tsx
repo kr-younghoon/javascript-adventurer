@@ -45,7 +45,7 @@ const App: React.FC = () => {
     return (
         <ProgressProvider>
             <div className="App">
-                <h1>type-adventurer🏃🏻‍♀️‍➡️</h1>
+                <h2>타입모험가🚨</h2>
                 {user ? (
                     <div>
                         <p>Welcome, {user.displayName}!</p>
