@@ -18,7 +18,7 @@ jobs:
             - name: Set up Node.js
               uses: actions/setup-node@v2
               with:
-                  node-version: '16' # 사용 중인 Node.js 버전으로 변경
+                  node-version: '20' # 사용 중인 Node.js 버전으로 변경
 
             # Install dependencies and build
             - run: npm ci && npm run build
