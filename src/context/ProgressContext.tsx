@@ -1,16 +1,13 @@
-import React, {
-    createContext,
-    useContext,
-    useState,
-    ReactNode,
-} from 'react';
+// src/context/ProgressContext.ts
+
+import { createContext, useContext } from 'react';
 
 interface ProgressContextType {
     completedQuests: Set<number>;
     markQuestComplete: (questId: number) => void;
 }
 
-const ProgressContext = createContext<
+export const ProgressContext = createContext<
     ProgressContextType | undefined
 >(undefined);
 
@@ -22,34 +19,4 @@ export const useProgress = () => {
         );
     }
     return context;
-};
-
-export const ProgressProvider: React.FC<{
-    children: ReactNode;
-}> = ({ children }) => {
-    const savedProgress = JSON.parse(
-        localStorage.getItem('completedQuests') || '[]'
-    );
-    const [completedQuests, setCompletedQuests] = useState<
-        Set<number>
-    >(new Set(savedProgress));
-
-    const markQuestComplete = (questId: number) => {
-        setCompletedQuests((prev) => {
-            const newSet = new Set(prev).add(questId);
-            localStorage.setItem(
-                'completedQuests',
-                JSON.stringify(Array.from(newSet))
-            );
-            return newSet;
-        });
-    };
-
-    return (
-        <ProgressContext.Provider
-            value={{ completedQuests, markQuestComplete }}
-        >
-            {children}
-        </ProgressContext.Provider>
-    );
 };

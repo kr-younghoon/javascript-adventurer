@@ -1,30 +1,45 @@
 import React from 'react';
 import { quests } from './quests';
 import QuestComponent from './components/Quest';
-import { auth } from './firebase';
 import Room from './components/Room';
-import { ProgressProvider } from './context/ProgressContext';
 import './App.css';
+import ProgressProvider from './context/ProgressProvider';
+
+// Firebase 모듈 가져오기
+import {
+    getAuth,
+    User,
+    onAuthStateChanged,
+    signInWithPopup,
+    GoogleAuthProvider,
+    signOut,
+} from 'firebase/auth';
+
+// 'auth' 이름 충돌을 피하기 위해 'firebaseAuth'로 변경
+const firebaseAuth = getAuth();
 
 const App: React.FC = () => {
-    const [user, setUser] =
-        React.useState<firebase.User | null>(null);
+    // 상태에 Firebase User 타입 사용
+    const [user, setUser] = React.useState<User | null>(
+        null
+    );
 
     React.useEffect(() => {
-        const unsubscribe = auth.onAuthStateChanged(
+        // 사용자 인증 상태 변경 리스너 설정
+        const unsubscribe = onAuthStateChanged(
+            firebaseAuth,
             (user) => setUser(user)
         );
         return unsubscribe;
     }, []);
 
     const signIn = async () => {
-        const provider =
-            new firebase.auth.GoogleAuthProvider();
-        await auth.signInWithPopup(provider);
+        const provider = new GoogleAuthProvider();
+        await signInWithPopup(firebaseAuth, provider);
     };
 
-    const signOut = () => {
-        auth.signOut();
+    const handleSignOut = () => {
+        signOut(firebaseAuth);
     };
 
     return (
@@ -37,7 +52,7 @@ const App: React.FC = () => {
                 {user ? (
                     <div>
                         <p>Welcome, {user.displayName}!</p>
-                        <button onClick={signOut}>
+                        <button onClick={handleSignOut}>
                             Sign Out
                         </button>
                         <Room />
