@@ -1,51 +1,8 @@
-# React + TypeScript + Vite
+# 타입 탐험가 (Type Explorer)
+> 타입 탐험가는 플레이어가 다양한 프로그래밍 문제를 해결하면서 TypeScript의 기본 문법과 개념을 배울 수 있는 교육용 게임입니다. 이 게임은 TypeScript를 처음 접하는 초보자부터 고급 사용자를 대상으로 하며, 단계별로 점점 더 어려워지는 문제를 통해 실력을 향상시킬 수 있도록 설계되었습니다.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
-
-- Configure the top-level `parserOptions` property like this:
-
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
-
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
-
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
-
+## 게임 특징
+- TypeScript의 기본 문법 학습: 타입 정의, 함수 작성, 인터페이스 및 제네릭 등 TypeScript의 주요 기능을 단계적으로 배울 수 있습니다.
+- 실전 문제 해결: 각 단계는 실제 프로그래밍 환경에서 직면할 수 있는 문제들로 구성되어 있어, 실무에서의 적용 능력을 키울 수 있습니다.
+- 점진적 난이도 상승: 게임은 쉬운 문제부터 시작하여 점차적으로 난이도가 높아지는 문제로 진행되며, 플레이어의 실력 향상에 맞춰 도전할 수 있습니다.
+- 즉각적인 피드백: 각 문제를 해결할 때마다 즉각적인 피드백을 받아 자신의 오류를 이해하고, 올바른 해결 방법을 익힐 수 있습니다.
